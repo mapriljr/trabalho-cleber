@@ -25,14 +25,109 @@ cont_t11, cont_t12, cont_t13, cont_t21, cont_t22, cont_t23 = [], [], [], [], [],
 cont_s11, cont_s12, cont_s13, cont_s14, cont_s21, cont_s22, cont_s23, cont_s24 = [], [], [], [], [], [], [], []
 
 def contador(jogador, embarcação):
-    if jogador == "JOGADOR_1" and embarcação == 'P':
-        cont_p1.append(embarcação)
-        comp1 = ''.join(cont_p1) 
-        if comp1 == 'PPPPP' : print("Você afundou meu porta-aviões")    
-    if jogador == "JOGADOR_2" and embarcação == 'P':   
-        cont_p2.append(embarcação)
-        comp2 = ''.join(cont_p2) 
-        if comp2 == 'PPPPP' : print("Você afundou meu porta-aviões")
+    if jogador == "JOGADOR_1": 
+        if embarcação == 'P':
+            cont_p1.append(embarcação)
+            cp1 = ''.join(cont_p1) 
+            if cp1 == 'PPPPP' : print("Você afundou meu porta-avião") 
+
+        elif embarcação == 'N1':
+            cont_n11.append(embarcação)
+            cn11 = ''.join(cont_n11)
+            if cn11 == 'N1N1N1N1' : print("Você afundou meu navio-tanque")
+
+        elif embarcação == 'N2':
+            cont_n12.append(embarcação)
+            cn12 = ''.join(cont_n11)
+            if cn12 == 'N2N2N2N2' : print("Você afundou meu navio-tanque")
+
+        elif embarcação == 'T3':
+            cont_t11.append(embarcação)
+            ct11 = ''.join(cont_t11)
+            if ct11 == 'T3T3T3' : print("Você afundou meu contratorpedeiro")
+
+        elif embarcação == 'T4':
+            cont_t12.append(embarcação)
+            ct12 = ''.join(cont_t12)
+            if ct12 == 'T4T4T4' : print("Você afundou meu contratorpedeiro")
+
+        elif embarcação == 'T5':
+            cont_t13.append(embarcação)
+            ct13 = ''.join(cont_t13)
+            if ct13 == 'T5T5T5' : print("Você afundou meu contratorpedeiro")
+
+        elif embarcação == 'S6':
+            cont_s11.append(embarcação)
+            cs11 = ''.join(cont_s11) 
+            if cs11 == 'S6S6' : print("Você afundou meu submarino") 
+
+        elif embarcação == 'S7':
+            cont_s12.append(embarcação)
+            cs12 = ''.join(cont_s12) 
+            if cs12 == 'S7S7' : print("Você afundou meu submarino") 
+
+        elif embarcação == 'S8':
+            cont_s13.append(embarcação)
+            cs13 = ''.join(cont_s13) 
+            if cs13 == 'S8S8' : print("Você afundou meu submarino") 
+
+        elif embarcação == 'S9':
+            cont_s14.append(embarcação)
+            cs14 = ''.join(cont_s14) 
+            if cs14 == 'S9S9' : print("Você afundou meu submarino") 
+
+    elif jogador == "JOGADOR_2": 
+        if embarcação == 'P':   
+            cont_p2.append(embarcação)
+            cp2 = ''.join(cont_p2) 
+            if cp2 == 'PPPPP' : print("Você afundou meu porta-avião")
+
+        elif embarcação == 'N1':
+            cont_n21.append(embarcação)
+            cn21 = ''.join(cont_n21)
+            if cn21 == 'N1N1N1N1' : print("Você afundou meu navio-tanque")
+
+        elif embarcação == 'N2':
+            cont_n22.append(embarcação)
+            cn22 = ''.join(cont_n22)
+            if cn22 == 'N2N2N2N2' : print("Você afundou meu navio-tanque")
+
+        elif embarcação == 'T3':
+            cont_t21.append(embarcação)
+            ct21 = ''.join(cont_t21)
+            if ct21 == 'T3T3T3' : print("Você afundou meu contratorpedeiro")
+
+        elif embarcação == 'T4':
+            cont_t22.append(embarcação)
+            ct22 = ''.join(cont_t22)
+            if ct22 == 'T4T4T4' : print("Você afundou meu contratorpedeiro")
+
+        elif embarcação == 'T5':
+            cont_t23.append(embarcação)
+            ct23 = ''.join(cont_t23)
+            if ct23 == 'T5T5T5' : print("Você afundou meu contratorpedeiro")
+
+        elif embarcação == 'S6':
+            cont_s21.append(embarcação)
+            cs21 = ''.join(cont_s21) 
+            if cs21 == 'S6S6' : print("Você afundou meu submarino") 
+
+        elif embarcação == 'S7':
+            cont_s22.append(embarcação)
+            cs22 = ''.join(cont_s22) 
+            if cs22 == 'S7S7' : print("Você afundou meu submarino") 
+
+        elif embarcação == 'S8':
+            cont_s23.append(embarcação)
+            cs23 = ''.join(cont_s23) 
+            if cs23 == 'S8S8' : print("Você afundou meu submarino") 
+
+        elif embarcação == 'S9':
+            cont_s24.append(embarcação)
+            cs24 = ''.join(cont_s24) 
+            if cs24 == 'S9S9' : print("Você afundou meu submarino") 
+
+    return
 
 
 def place_ship(board, ship_size, ship_id):
@@ -87,34 +182,41 @@ def user_guess(remaining_ships, jogador, board, board_o):
 
     if  (board[guess_x][guess_y] == 'S6') or (board[guess_x][guess_y] == 'S7') or (board[guess_x][guess_y] == 'S8') or (board[guess_x][guess_y] == 'S9'):
         print(jogador + " Hit!")
+        acerto = board[guess_x][guess_y]
         board[guess_x][guess_y] = 'X'
         board_o[guess_x][guess_y] = 'X'
         remaining_ships -= 1
+        contador(jogador, acerto)
         display_board(board_o, jogador)
         return user_guess(remaining_ships, jogador, board, board_o)
 
     elif (board[guess_x][guess_y] == 'T3') or (board[guess_x][guess_y] == 'T4') or (board[guess_x][guess_y] == 'T5'):
         print(jogador + " Hit!")
+        acerto = board[guess_x][guess_y]
         board[guess_x][guess_y] = 'X'
         board_o[guess_x][guess_y] = 'X'
         remaining_ships -= 1
+        contador(jogador, acerto)
         display_board(board_o, jogador)
         return user_guess(remaining_ships, jogador, board, board_o)
     
     elif (board[guess_x][guess_y] == 'N1') or (board[guess_x][guess_y] == 'N2'):
         print(jogador + " Hit!")
+        acerto = board[guess_x][guess_y]
         board[guess_x][guess_y] = 'X'
         board_o[guess_x][guess_y] = 'X'
         remaining_ships -= 1
+        contador(jogador, acerto)
         display_board(board_o, jogador)
         return user_guess(remaining_ships, jogador, board, board_o)
     
     elif (board[guess_x][guess_y] == 'P'):
         print(jogador + " Hit!")
+        acerto = board[guess_x][guess_y]
         board[guess_x][guess_y] = 'X'
         board_o[guess_x][guess_y] = 'X'
         remaining_ships -= 1
-        contador(jogador, 'P')
+        contador(jogador, acerto)
         display_board(board_o, jogador)
         return user_guess(remaining_ships, jogador, board, board_o)
         
