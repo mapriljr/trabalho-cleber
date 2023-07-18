@@ -19,6 +19,21 @@ ship_sizes = [5, 4, 4, 3, 3, 3, 2, 2, 2, 2]  # Example ship sizes
 
 ship_numbers = len(ship_sizes)  # Number of ships
 
+cont_p1, cont_p2 = [] , []
+cont_n11, cont_n12, cont_n21, cont_n22 = [], [], [], []
+cont_t11, cont_t12, cont_t13, cont_t21, cont_t22, cont_t23 = [], [], [], [], [], []
+cont_s11, cont_s12, cont_s13, cont_s14, cont_s21, cont_s22, cont_s23, cont_s24 = [], [], [], [], [], [], [], []
+
+def contador(jogador, embarcação):
+    if jogador == "JOGADOR_1" and embarcação == 'P':
+        cont_p1.append(embarcação)
+        comp1 = ''.join(cont_p1) 
+        if comp1 == 'PPPPP' : print("Você afundou meu porta-aviões")    
+    if jogador == "JOGADOR_2" and embarcação == 'P':   
+        cont_p2.append(embarcação)
+        comp2 = ''.join(cont_p2) 
+        if comp2 == 'PPPPP' : print("Você afundou meu porta-aviões")
+
 
 def place_ship(board, ship_size, ship_id):
     # Generate random coordinates for the ship's starting position
@@ -47,7 +62,7 @@ def place_ship(board, ship_size, ship_id):
         for i in range(ship_size):
             if ship_size == 5: board[x][y + i] = 'P'
             elif ship_size == 4: 
-                board[x][y + i] = ('N' + str(ship_id))
+                board[x][y + i] = ('N' + str(ship_id))  
             elif ship_size == 3: 
                 board[x][y + i] = ('T' + str(ship_id))
             elif ship_size == 2: 
@@ -62,8 +77,7 @@ def place_ship(board, ship_size, ship_id):
                 board[x + i][y] = ('T' + str(ship_id))
             elif ship_size == 2: 
                 board[x + i][y] = ('S' + str(ship_id))
-        
-                       
+                               
     return board
 
 def user_guess(remaining_ships, jogador, board, board_o):
@@ -100,7 +114,7 @@ def user_guess(remaining_ships, jogador, board, board_o):
         board[guess_x][guess_y] = 'X'
         board_o[guess_x][guess_y] = 'X'
         remaining_ships -= 1
-        
+        contador(jogador, 'P')
         display_board(board_o, jogador)
         return user_guess(remaining_ships, jogador, board, board_o)
         
@@ -149,8 +163,8 @@ def main():
     display_board(board_o2, "JOGADOR_2")
 
     #MOSTRA O TABULEIRO COM AS EMBARCAÇÕES | remover o # para visualizar as embarcações posicionadas
-    #display_board(board_1, "JOGADOR_1")
-    #display_board(board_2, "JOGADOR_2")
+    display_board(board_1, "JOGADOR_1")
+    display_board(board_2, "JOGADOR_2")
 
 
     while remaining_ships > 0:
