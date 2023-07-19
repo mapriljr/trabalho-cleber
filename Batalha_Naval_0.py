@@ -17,19 +17,20 @@ board_o2 = [['~' for i in range(board_size)] for j in range(board_size)]
 ship_sizes = [5, 4, 4, 3, 3, 3, 2, 2, 2, 2]  # Example ship sizes
 
 
-ship_numbers = len(ship_sizes)  # Number of ships
+ship_numbers = 30  # Número de posições ocupadas pelas embarcações
 
+# Listas vazias para armazenar os contadores de acertos na função contador()
 cont_p1, cont_p2 = [] , []
 cont_n11, cont_n12, cont_n21, cont_n22 = [], [], [], []
 cont_t11, cont_t12, cont_t13, cont_t21, cont_t22, cont_t23 = [], [], [], [], [], []
 cont_s11, cont_s12, cont_s13, cont_s14, cont_s21, cont_s22, cont_s23, cont_s24 = [], [], [], [], [], [], [], []
 
-def contador(jogador, embarcação):
+def contador(jogador, embarcação): # função para indicar se afundou alguma embarcação
     if jogador == "JOGADOR_1": 
         if embarcação == 'P':
-            cont_p1.append(embarcação)
-            cp1 = ''.join(cont_p1) 
-            if cp1 == 'PPPPP' : print("Você afundou meu porta-avião") 
+            cont_p1.append(embarcação) # coloca o identificador da embarcação acertada numa lista
+            cp1 = ''.join(cont_p1) # passa a lista para string
+            if cp1 == 'PPPPP' : print("Você afundou meu porta-avião") # imprime quando alcançar a quantidade
 
         elif embarcação == 'N1':
             cont_n11.append(embarcação)
@@ -38,7 +39,7 @@ def contador(jogador, embarcação):
 
         elif embarcação == 'N2':
             cont_n12.append(embarcação)
-            cn12 = ''.join(cont_n11)
+            cn12 = ''.join(cont_n12)
             if cn12 == 'N2N2N2N2' : print("Você afundou meu navio-tanque")
 
         elif embarcação == 'T3':
@@ -129,7 +130,6 @@ def contador(jogador, embarcação):
 
     return
 
-
 def place_ship(board, ship_size, ship_id):
     # Generate random coordinates for the ship's starting position
     x = random.randint(0, board_size - 1)
@@ -176,47 +176,50 @@ def place_ship(board, ship_size, ship_id):
     return board
 
 def user_guess(remaining_ships, jogador, board, board_o):
-    guess_x = int(input(jogador + " Enter the row (1 to 10): ")) -1
-    letrasParaNumeros = {'A':1, 'B':2, 'C':3, 'D':4,'E':5,'F':6,'G':7,'H':8,'I':9,'J':10}
-    guess_y = int(letrasParaNumeros[((input(jogador + " Enter the column (A to J): ")).upper())]) -1
+    if remaining_ships == 0: return remaining_ships # Testa se ainda restam posições ocupadas, se não tiver retorna remaining_ships == 0 
 
+    else:
+        guess_x = int(input(jogador + " Enter the row (1 to 10): ")) -1
+        letrasParaNumeros = {'A':1, 'B':2, 'C':3, 'D':4,'E':5,'F':6,'G':7,'H':8,'I':9,'J':10}
+        guess_y = int(letrasParaNumeros[((input(jogador + " Enter the column (A to J): ")).upper())]) -1
+        
     if  (board[guess_x][guess_y] == 'S6') or (board[guess_x][guess_y] == 'S7') or (board[guess_x][guess_y] == 'S8') or (board[guess_x][guess_y] == 'S9'):
         print(jogador + " Hit!")
-        acerto = board[guess_x][guess_y]
+        embarcação = board[guess_x][guess_y] # Armazena o identificador da embarcação atingida
         board[guess_x][guess_y] = 'X'
         board_o[guess_x][guess_y] = 'X'
         remaining_ships -= 1
-        contador(jogador, acerto)
+        contador(jogador, embarcação)
         display_board(board_o, jogador)
         return user_guess(remaining_ships, jogador, board, board_o)
 
     elif (board[guess_x][guess_y] == 'T3') or (board[guess_x][guess_y] == 'T4') or (board[guess_x][guess_y] == 'T5'):
         print(jogador + " Hit!")
-        acerto = board[guess_x][guess_y]
+        embarcação = board[guess_x][guess_y]
         board[guess_x][guess_y] = 'X'
         board_o[guess_x][guess_y] = 'X'
         remaining_ships -= 1
-        contador(jogador, acerto)
+        contador(jogador, embarcação)
         display_board(board_o, jogador)
         return user_guess(remaining_ships, jogador, board, board_o)
     
     elif (board[guess_x][guess_y] == 'N1') or (board[guess_x][guess_y] == 'N2'):
         print(jogador + " Hit!")
-        acerto = board[guess_x][guess_y]
+        embarcação = board[guess_x][guess_y]
         board[guess_x][guess_y] = 'X'
         board_o[guess_x][guess_y] = 'X'
         remaining_ships -= 1
-        contador(jogador, acerto)
+        contador(jogador, embarcação)
         display_board(board_o, jogador)
         return user_guess(remaining_ships, jogador, board, board_o)
     
     elif (board[guess_x][guess_y] == 'P'):
         print(jogador + " Hit!")
-        acerto = board[guess_x][guess_y]
+        embarcação = board[guess_x][guess_y] 
         board[guess_x][guess_y] = 'X'
         board_o[guess_x][guess_y] = 'X'
         remaining_ships -= 1
-        contador(jogador, acerto)
+        contador(jogador, embarcação)
         display_board(board_o, jogador)
         return user_guess(remaining_ships, jogador, board, board_o)
         
@@ -229,7 +232,7 @@ def user_guess(remaining_ships, jogador, board, board_o):
         print(jogador + " Miss!")
         board[guess_x][guess_y] = '*'
         board_o[guess_x][guess_y] = '*'
-        return
+        return remaining_ships
 
 def display_board(board, jogador):
     num_linha = 1
@@ -245,12 +248,12 @@ def display_board(board, jogador):
         
 ship_id = 0 # Id para cada embarcação criada
 for size in ship_sizes:
-    board_1 = place_ship(board_1, size, ship_id)
+    board_1 = place_ship(board_1, size, ship_id) # pega a tabela criada anteriormente e preenche com as embarcações no tabuleiro do Jogador 1
     ship_id += 1
     
 ship_id = 0
 for size in ship_sizes:
-    board_2 = place_ship(board_2, size, ship_id)
+    board_2 = place_ship(board_2, size, ship_id) # tabuleiro do Jogador 2
     ship_id += 1
     
 def main():
@@ -258,30 +261,29 @@ def main():
 # Place all the ships on the board
 
 
-    remaining_ships = ship_numbers
+    remaining_ships_1, remaining_ships_2 = ship_numbers, ship_numbers # Quantidade de posições ocupadas para cada jogador 
 
     # Display the guessing board
     display_board(board_o1, "JOGADOR_1")
     display_board(board_o2, "JOGADOR_2")
 
     #MOSTRA O TABULEIRO COM AS EMBARCAÇÕES | remover o # para visualizar as embarcações posicionadas
-    display_board(board_1, "JOGADOR_1")
-    display_board(board_2, "JOGADOR_2")
+    #display_board(board_1, "JOGADOR_1")
+    #display_board(board_2, "JOGADOR_2")
 
 
-    while remaining_ships > 0:
+    while (remaining_ships_1 > 0) and (remaining_ships_2 > 0):
      
         # Take user input for the guess JOGADOR_1
-        guess = user_guess(remaining_ships, "JOGADOR_1", board_1, board_o1)
+        remaining_ships_1 = user_guess(remaining_ships_1, "JOGADOR_1", board_1, board_o1)
     
         # Display the guessing board JOGADOR_1
-        display_board(board_o1, "JOGADOR_1")    
+        display_board(board_o1, "JOGADOR_1")
+        if remaining_ships_1 == 0 : break # Quando o jogador 1 afundar todos os navios ele volta pra testar e sair do loop     
     
         # Take user input for the guess JOGADOR_2
-        guess = user_guess(remaining_ships, "JOGADOR_2", board_2, board_o2)
+        remaining_ships_2 = user_guess(remaining_ships_2, "JOGADOR_2", board_2, board_o2)
         
-        # Check the guessed position BOARD_2
-      
         # Display the guessing board JOGADOR_2
         display_board(board_o2, "JOGADOR_2")
 
