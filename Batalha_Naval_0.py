@@ -2,7 +2,7 @@
 """
 Created on Mon Jul 10 20:24:57 2023
 
-@author: cleft
+@author: mapjr
 """
 import random
 
@@ -131,11 +131,11 @@ def contador(jogador, embarcação): # função para indicar se afundou alguma e
     return
 
 def place_ship(board, ship_size, ship_id):
-    # Generate random coordinates for the ship's starting position
+    # Gera coordenadas da embarcação
     x = random.randint(0, board_size - 1)
     y = random.randint(0, board_size - 1)
     
-    # Generate random orientation for the ship (horizontal or vertical)
+    # Gera a orientação da embarcação (horizontal or vertical)
     is_horizontal = random.choice([True, False])
 
     # Check if the ship can be placed at the randomly chosen coordinates
@@ -152,7 +152,7 @@ def place_ship(board, ship_size, ship_id):
             if board[x + i][y] != '~':
                 return place_ship(board, ship_size, ship_id)
 
-    # Place the ship on the board
+    # Coloca embarcação no tabuleiro
     if is_horizontal:
         for i in range(ship_size):
             if ship_size == 5: board[x][y + i] = 'P'

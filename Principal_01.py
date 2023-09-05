@@ -2,7 +2,7 @@
 """
 Created on Tue Jul 18 05:39:59 2023
 
-@author: cleft
+@author: mapjr
 """
 
 from Batalha_Naval_0 import *
